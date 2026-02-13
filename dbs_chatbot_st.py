@@ -86,7 +86,7 @@ st.markdown("""
 def load_rag_chain():
     """Load embeddings, vector store, LLM, and build the RAG chain."""
     load_dotenv()
-    api_key = os.environ.get("GEMINI_API_KEY", "")
+    api_key = os.environ.get("GEMINI_API_KEY", "") or st.secrets.get("GEMINI_API_KEY", "")
     if not api_key:
         st.error("⚠️ GEMINI_API_KEY not found. Create a `.env` file with: GEMINI_API_KEY=your_key_here")
         st.stop()
@@ -260,4 +260,5 @@ elif mode == "🔍 RAG vs LLM":
             st.caption("Gemini without context")
             with st.spinner("Generating..."):
                 llm_answer = llm.invoke(query).content
+
             st.warning(llm_answer)
