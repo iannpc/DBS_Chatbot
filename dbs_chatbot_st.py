@@ -22,7 +22,7 @@ from langchain_core.prompts import ChatPromptTemplate
 CHROMA_DB_PATH = "./chroma_db"
 COLLECTION_NAME = "dbs_help_support"
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
-LLM_MODEL = "gemini-2.5-flash"
+LLM_MODEL = "gemini-2.0-flash"
 TOP_K = 8
 
 # ── Page Config ────────────────────────────────────────────────────────────────
@@ -263,4 +263,5 @@ elif mode == "🔍 RAG vs LLM":
             st.caption("Gemini without context")
             with st.spinner("Generating..."):
                 llm_answer = llm.invoke(query).content
+
             st.warning(llm_answer)
