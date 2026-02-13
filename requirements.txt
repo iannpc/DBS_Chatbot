@@ -3,6 +3,7 @@ beautifulsoup4
 lxml
 langchain
 langchain-chroma
+chromadb==1.4.1
 langchain-huggingface
 langchain-google-genai
 sentence-transformers
