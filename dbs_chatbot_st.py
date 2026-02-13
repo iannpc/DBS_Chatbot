@@ -23,7 +23,7 @@ CHROMA_DB_PATH = "./chroma_db"
 COLLECTION_NAME = "dbs_help_support"
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 LLM_MODEL = "gemini-2.5-flash"
-TOP_K = 5
+TOP_K = 8
 
 # ── Page Config ────────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -100,8 +100,12 @@ def load_rag_chain():
         persist_directory=CHROMA_DB_PATH,
     )
 
-    # Retriever
-    retriever = vector_store.as_retriever(search_kwargs={"k": TOP_K})
+    # Retriever — uses MMR (Maximum Marginal Relevance) for diverse results
+    # This prevents all results being about "DBS" generically when user mentions "DBS"
+    retriever = vector_store.as_retriever(
+        search_type="mmr",
+        search_kwargs={"k": TOP_K, "fetch_k": 20},
+    )
 
     # LLM
     llm = ChatGoogleGenerativeAI(model=LLM_MODEL, google_api_key=api_key)
@@ -263,4 +267,8 @@ elif mode == "🔍 RAG vs LLM":
             st.caption("Gemini without context")
             with st.spinner("Generating..."):
                 llm_answer = llm.invoke(query).content
+            st.warning(llm_answer)
+            with st.spinner("Generating..."):
+                llm_answer = llm.invoke(query).content
+
             st.warning(llm_answer)
