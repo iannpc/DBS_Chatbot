@@ -1,0 +1,10 @@
+requests
+beautifulsoup4
+lxml
+langchain
+langchain-chroma
+langchain-huggingface
+langchain-google-genai
+sentence-transformers
+python-dotenv
+streamlit
